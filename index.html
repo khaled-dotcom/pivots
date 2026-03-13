@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>تسجيل نشاط طلابي</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Cairo',sans-serif;
+}
+
+body{
+
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(135deg,#0c2d48,#145da0);
+
+}
+
+.brand{
+  text-align:center;
+  margin-bottom:18px;
+  color:#ffffff;
+}
+
+.brand .logo{
+  width:115px;
+  margin:0 auto 12px;
+  display:block;
+  border-radius:20px;
+  border:2px dashed rgba(255,255,255,0.6);
+  box-shadow:0 12px 24px rgba(0,0,0,0.25);
+  background:#ffffff;
+  padding:8px;
+}
+
+.brand h1{
+  font-size:24px;
+  letter-spacing:0.5px;
+  margin-bottom:6px;
+  font-weight:800;
+  color:#ffffff;
+}
+
+.brand .tagline{
+  font-size:14px;
+  opacity:0.92;
+  color:#e3f2ff;
+}
+
+.container{
+
+width:500px;
+background:rgba(255,255,255,0.96);
+padding:42px;
+border-radius:20px;
+box-shadow:0 28px 80px rgba(0,0,0,0.35);
+text-align:right;
+
+animation:cardEnter 1s ease;
+
+}
+
+.container h2{
+  color:#0d3b66;
+  margin-bottom:22px;
+  font-size:26px;
+  letter-spacing:0.6px;
+  font-weight:800;
+}
+
+@media (max-width: 600px) {
+  body{padding:40px 12px;}
+  .container{width:100%;padding:26px;}
+  .brand h1{font-size:20px;}
+}
+
+
+
+@keyframes cardEnter{
+
+from{
+opacity:0;
+transform:translateY(60px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+/* LOGO */
+
+.logo{
+
+width:130px;
+margin-bottom:15px;
+
+animation:logoEnter 1.2s ease;
+
+}
+
+@keyframes logoEnter{
+
+0%{
+opacity:0;
+transform:scale(0.5) rotate(-20deg);
+}
+
+60%{
+transform:scale(1.1) rotate(5deg);
+}
+
+100%{
+opacity:1;
+transform:scale(1) rotate(0deg);
+}
+
+}
+
+/* TITLE */
+
+h2{
+
+color:#0c2d48;
+margin-bottom:25px;
+font-weight:700;
+
+}
+
+/* INPUTS */
+
+.input-group{
+
+margin-bottom:15px;
+
+}
+
+input{
+
+width:100%;
+padding:14px 14px 14px 16px;
+border-radius:12px;
+border:1px solid #b7c6de;
+font-size:15px;
+background:#f7f9fc;
+color:#0a2140;
+
+transition:all 0.25s ease;
+
+}
+
+input:hover,
+input:focus{
+
+border-color:#386fa4;
+outline:none;
+box-shadow:0 1px 12px rgba(20,93,160,0.22);
+background:#ffffff;
+
+}
+
+
+
+/* BUTTON */
+
+button{
+
+width:100%;
+padding:14px;
+
+border:none;
+border-radius:10px;
+
+background:#1e64e9;
+
+color:white;
+
+font-size:16px;
+font-weight:700;
+
+cursor:pointer;
+
+transition:all 0.22s ease;
+
+box-shadow:0 8px 18px rgba(30,100,233,0.35);
+
+}
+
+button:hover{
+
+background:#144fc9;
+
+transform:translateY(-2px);
+
+box-shadow:0 10px 22px rgba(22,90,210,0.38);
+
+}
+
+button:active{
+  transform:translateY(0);
+  box-shadow:0 6px 14px rgba(22,90,210,0.45);
+}
+
+
+
+button.loading{
+
+opacity:0.7;
+pointer-events:none;
+
+}
+
+/* SUCCESS */
+
+.success{
+
+color:#27ae60;
+margin-top:15px;
+display:none;
+font-weight:600;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="brand">
+  <img src="386640363_159857903849738_6698213264954947216_n.jpg" alt="شعار النشاط الطلابي" class="logo">
+  <h1>منصة تسجيل النشاط الطلابي</h1>
+  <p class="tagline">نموذج احترافي لتجميع بيانات النشاط التنظيمية بسرعة وأمان</p>
+</div>
+
+<div class="container">
+
+<h2>تسجيل نشاط طلابي</h2>
+
+<form id="studentForm">
+
+<div class="input-group">
+<input type="text" name="name" placeholder="الاسم الكامل" required>
+</div>
+
+<div class="input-group">
+<input type="email" name="email" placeholder="البريد الإلكتروني" required>
+</div>
+
+<div class="input-group">
+<input type="text" name="faculty" placeholder="الكلية" required>
+</div>
+
+<div class="input-group">
+<input type="text" name="phone" placeholder="رقم الهاتف" required>
+</div>
+
+
+<button id="submitBtn">إرسال</button>
+
+</form>
+
+<p class="success" id="success">
+تم إرسال البيانات بنجاح ✔
+</p>
+
+</div>
+
+<script>
+
+const form = document.getElementById("studentForm");
+const btn = document.getElementById("submitBtn");
+const success = document.getElementById("success");
+
+form.addEventListener("submit", async function(e){
+
+  e.preventDefault();
+
+  btn.classList.add("loading");
+
+  let start = Date.now();
+  btn.innerText = "جاري الإرسال... (00:00)";
+
+  const timer = setInterval(() => {
+    const elapsed = Math.floor((Date.now() - start) / 1000);
+    const minutes = String(Math.floor(elapsed / 60)).padStart(2, "0");
+    const seconds = String(elapsed % 60).padStart(2, "0");
+    btn.innerText = `جاري الإرسال... (${minutes}:${seconds})`;
+  }, 1000);
+
+  const data = new FormData(form);
+  const json = Object.fromEntries(data.entries());
+
+  try {
+    await fetch("https://ghalwashnn.app.n8n.cloud/webhook/contact-form", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(json)
+    });
+
+    success.style.display = "block";
+
+  } catch (error) {
+    success.style.display = "block";
+    success.innerText = "فشل في الإرسال، حاول مرة أخرى";
+    success.style.color = "#e74c3c";
+  } finally {
+    clearInterval(timer);
+    btn.classList.remove("loading");
+    btn.innerText = "إرسال";
+    form.reset();
+  }
+
+});
+
+</script>
+
+</body>
+</html>
